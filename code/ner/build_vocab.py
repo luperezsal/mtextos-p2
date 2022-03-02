@@ -36,12 +36,11 @@ UNK_WORD = 'UNK'
 def save_vocab_to_txt_file(vocab, txt_path):
     """
     ### Función `save_vocab_to_txt_file`
-    Descripción detallada de la función.
-
+    Recorre todas las palabras del diccionario (keys) y escribe todas las palabras separadas por saltos de línea
     #### Parámetros:
 
-    * `vocab`: vocabulario...
-    * `txt_path`: ruta del...
+    * `vocab`: vocabulario que contiene todas las palabras del corpus
+    * `txt_path`: ruta del fichero a escribir con formato .txt
     """
     with open(txt_path, "w") as f:  # Este tipo de comentario es ignorado por pycco.
         for token in vocab:
@@ -49,17 +48,38 @@ def save_vocab_to_txt_file(vocab, txt_path):
             
 
 def save_dict_to_json(d, json_path):
+    """
+    ### Función `save_dict_to_json`
+    Escribe el diccionario d en un fichero con formato json.
+
+    #### Parámetros:
+
+    * `d`: diccionario con estadísticas sobre datos de train/val/test y el vocabulario.
+    * `json_path`: ruta del json del fichero a escribir
+    """
+
     with open(json_path, 'w') as f:
         # Los comentarios cortos aparecen en la documentación si no hay código en esa línea.
         # En general, la mayoría de los comentarios serán largos y usarán docstrings.
         d = {k: v for k, v in d.items()}
         """
-        Este es un comentario más largo. La variable `d` es un diccionario que...
+        Este es un comentario más largo. La variable `d` es un diccionario que contiene estadísticas sobre los datos
+        y sobre el vocabulario del corpus.
         """
         json.dump(d, f, indent=4)
 
 
 def update_vocab(txt_path, vocab):
+    """
+    ### Función `save_dict_to_json`
+    Construye y actualiza el vocabulario 
+
+    #### Parámetros:
+
+    * `txt_path`: ruta del fichero de texto a leer
+    * `vocab`: vocabulario con las palabras del corpus que lleva el conteo.  
+    """
+
     with open(txt_path) as f:
         for i, line in enumerate(f):
             vocab.update(line.strip().split(' '))
