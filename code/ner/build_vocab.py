@@ -73,11 +73,13 @@ def update_vocab(txt_path, vocab):
     """
     ### Función `update_vocab`
     Construye y actualiza el vocabulario leyendo las líneas del fichero de entrada.
-    Devuelve el número de líneas totales
+
     #### Parámetros:
 
     * `txt_path`: ruta del fichero de texto a leer
     * `vocab`: vocabulario con las palabras del corpus que lleva el conteo.  
+
+    #### Return: número de líneas leídas.
     """
 
     with open(txt_path) as f:
