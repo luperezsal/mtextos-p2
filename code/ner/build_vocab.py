@@ -36,7 +36,7 @@ UNK_WORD = 'UNK'
 def save_vocab_to_txt_file(vocab, txt_path):
     """
     ### Función `save_vocab_to_txt_file`
-    Recorre todas las palabras del diccionario (keys) y escribe todas las palabras separadas por saltos de línea
+    Recorre todas las palabras del diccionario (keys) y escribe todas las palabras, 1 por línea
     #### Parámetros:
 
     * `vocab`: vocabulario que contiene todas las palabras del corpus
@@ -50,7 +50,7 @@ def save_vocab_to_txt_file(vocab, txt_path):
 def save_dict_to_json(d, json_path):
     """
     ### Función `save_dict_to_json`
-    Escribe el diccionario d en un fichero con formato json.
+    Escribe el diccionario de entrada en un fichero con formato json.
 
     #### Parámetros:
 
@@ -71,9 +71,9 @@ def save_dict_to_json(d, json_path):
 
 def update_vocab(txt_path, vocab):
     """
-    ### Función `save_dict_to_json`
-    Construye y actualiza el vocabulario 
-
+    ### Función `update_vocab`
+    Construye y actualiza el vocabulario leyendo las líneas del fichero de entrada.
+    Devuelve el número de líneas totales
     #### Parámetros:
 
     * `txt_path`: ruta del fichero de texto a leer
@@ -122,6 +122,7 @@ if __name__ == '__main__':
     save_vocab_to_txt_file(tags, os.path.join(args.data_dir, 'tags.txt'))
     print("- done.")
 
+    # Estadísticas acerca de los splits, dataset y tokens especiales para el entrenamiento
     sizes = {
         'train_size': size_train_sentences,
         'dev_size': size_dev_sentences,
