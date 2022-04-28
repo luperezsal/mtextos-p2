@@ -13,6 +13,7 @@ class DataLoader(object):
     def __init__(self, data_dir, params):
  
         json_path = os.path.join(data_dir, 'dataset_params.json')
+        print(json_path)
         assert os.path.isfile(json_path), "No json file found at {}, run build_vocab.py".format(json_path)
         self.dataset_params = utils.Params(json_path)        
         
@@ -82,11 +83,17 @@ class DataLoader(object):
             batch_sentences = [data['data'][idx] for idx in order[i*params.batch_size:(i+1)*params.batch_size]]
             batch_tags = [data['labels'][idx] for idx in order[i*params.batch_size:(i+1)*params.batch_size]]
 
+            # Crea una lista que sea el máximo de todas las frases del batch.
             batch_max_len = max([len(s) for s in batch_sentences])
 
+            # Se rellenan las matrices con los datos, pero donde no hay hay que poner PAD.
+            # Rellenar la matriz con todas las frases,
+            # Matriz de 1s con el tamaño del minibatch y la frase más larga.
+            # -1 = PAD
             batch_data = self.pad_ind*np.ones((len(batch_sentences), batch_max_len))
             batch_labels = -1*np.ones((len(batch_sentences), batch_max_len))
 
+            # Se rellena
             for j in range(len(batch_sentences)):
                 cur_len = len(batch_sentences[j])
                 batch_data[j][:cur_len] = batch_sentences[j]
