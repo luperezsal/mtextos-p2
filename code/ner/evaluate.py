@@ -17,6 +17,20 @@ parser.add_argument('--restore_file', default='best', help="name of the file in 
 
 
 def evaluate(model, loss_fn, data_iterator, metrics, params, num_steps):
+    """
+    ### Función `evaluate`
+    Evalúa el modelo en el conjunto de test y devuelve las métricas correspondientes
+
+    #### Parámetros:
+    * `model`: instancia del modelo a evaluar.
+    * `loss_fn`: función de pérdida a computar.
+    * `data_iterator`: iterador con los datos de test
+    * `metrics`: {dict} diccionario con las métricas a evaluar.
+    * `params`: {dict} hyperparámetros para el test (NOT USED).
+    * `num_steps`: {dict} número de pasos a dar para evaluar el modelo.
+
+    #### Return `metrics_mean`: devuelve un diccionario con los resultados de las métricas
+    """
     
     # Configura el modelo en modo evaluación, desactivando ciertas funciones como Dropout.
     model.eval()
@@ -99,6 +113,7 @@ if __name__ == '__main__':
     
     logging.info("Starting evaluation")
 
+    # Carga el modelo que se quiere evaluar
     utils.load_checkpoint(os.path.join(args.model_dir, args.restore_file + '.pth.tar'), model)
 
     # Se calcula el número de iteraciones de la evaluación en función del tamaño del conjunto de test
