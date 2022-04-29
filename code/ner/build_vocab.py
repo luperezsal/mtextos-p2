@@ -27,11 +27,6 @@ PAD_WORD = '<pad>'
 PAD_TAG = 'O'
 UNK_WORD = 'UNK'
 
-"""
-## Título de sección de nivel 2
-
-### Título de sección de nivel 3
-"""
 
 def save_vocab_to_txt_file(vocab, txt_path):
     """
@@ -42,7 +37,9 @@ def save_vocab_to_txt_file(vocab, txt_path):
     * `vocab`: vocabulario que contiene todas las palabras del corpus
     * `txt_path`: ruta del fichero a escribir con formato .txt
     """
-    with open(txt_path, "w") as f:  # Este tipo de comentario es ignorado por pycco.
+    
+    # Abre el fichero y escribe los tokens del vocabulario
+    with open(txt_path, "w") as f:  
         for token in vocab:
             f.write(token + '\n')
             
@@ -59,8 +56,6 @@ def save_dict_to_json(d, json_path):
     """
 
     with open(json_path, 'w') as f:
-        # Los comentarios cortos aparecen en la documentación si no hay código en esa línea.
-        # En general, la mayoría de los comentarios serán largos y usarán docstrings.
         d = {k: v for k, v in d.items()}
         """
         Este es un comentario más largo. La variable `d` es un diccionario que contiene estadísticas sobre los datos
@@ -91,8 +86,10 @@ def update_vocab(txt_path, vocab):
 
 if __name__ == '__main__':
 
+    # Hace el parsing de los argumentos
     args = parser.parse_args()
 
+    # Crea el vocabulario para train, validación y test
     print("Building word vocabulary...")
     words = Counter()
     size_train_sentences = update_vocab(os.path.join(args.data_dir, 'train/sentences.txt'), words)
@@ -100,6 +97,7 @@ if __name__ == '__main__':
     size_test_sentences = update_vocab(os.path.join(args.data_dir, 'test/sentences.txt'), words)
     print("- done.")
 
+    # Crea el vocabulario con las etiquetas de salida para train, val y test
     print("Building tag vocabulary...")
     tags = Counter()
     size_train_tags = update_vocab(os.path.join(args.data_dir, 'train/labels.txt'), tags)
@@ -107,18 +105,23 @@ if __name__ == '__main__':
     size_test_tags = update_vocab(os.path.join(args.data_dir, 'test/labels.txt'), tags)
     print("- done.")
 
+    # Comprueba que los tamaños de input y target sean iguales
     assert size_train_sentences == size_train_tags
     assert size_dev_sentences == size_dev_tags
     assert size_test_sentences == size_test_tags
 
+    # Filtra las palabras y los tags que no aparezcan más que un mínimo establecido 
     words = [tok for tok, count in words.items() if count >= args.min_count_word]
     tags = [tok for tok, count in tags.items() if count >= args.min_count_tag]
 
+    # Añade los paddings al vocabulario de words y tags
     if PAD_WORD not in words: words.append(PAD_WORD)
     if PAD_TAG not in tags: tags.append(PAD_TAG)
     
+    # Añade el UNKNOWN token
     words.append(UNK_WORD)
 
+    # Guarda el vocabulario con las palabras y los tags
     print("Saving vocabularies to file...")
     save_vocab_to_txt_file(words, os.path.join(args.data_dir, 'words.txt'))
     save_vocab_to_txt_file(tags, os.path.join(args.data_dir, 'tags.txt'))
@@ -135,7 +138,10 @@ if __name__ == '__main__':
         'pad_tag': PAD_TAG,
         'unk_word': UNK_WORD
     }
+
+    # Guarda parámetros de los datasets
     save_dict_to_json(sizes, os.path.join(args.data_dir, 'dataset_params.json'))
 
+    # Printea las estadísticas del dataset
     to_print = "\n".join("- {}: {}".format(k, v) for k, v in sizes.items())
     print("Characteristics of the dataset:\n{}".format(to_print))
