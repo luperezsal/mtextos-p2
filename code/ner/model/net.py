@@ -7,6 +7,13 @@ import torch.nn.functional as F
 class Net(nn.Module):
 
     def __init__(self, params):
+        """
+        ### Función `__init__`
+        Inicializa la clase que contiene el modelo neuronal.
+
+        #### Parámetros:
+        * `params`: {Params} diccionario con los hiperparámetros del modelo.
+        """
         super(Net, self).__init__()
         
         # Crea una capa de embebdding de tamaño vocab size que se mapea a la dimensión del embedding
@@ -21,6 +28,17 @@ class Net(nn.Module):
         self.fc = nn.Linear(params.lstm_hidden_dim, params.number_of_tags)
 
     def forward(self, s):
+        """
+        ### Función `forward`
+        Realiza la predicción del modelo sobre unos datos de entrada
+
+        #### Parámetros:
+        * `self`: propia instancia del modelo neuronal
+        * `s`: secuencias de entrada sobre las que se va a predecir.
+
+        #### Return `F_log_softmax`: devuelve la predicción con las probabilidad de cada etiqueta por cada token
+        """
+
         # Forward en capa de embedding
         s = self.embedding(s)
         
@@ -43,6 +61,17 @@ class Net(nn.Module):
 
 
 def loss_fn(outputs, labels):
+    """
+    ### Función `loss_fn`
+    Calcula la pérdida entre las predicciones del modelo y las etiquetas de salida reales (ground truth)
+
+    #### Parámetros:
+    * `outputs`: predicciones del modelo
+    * `labels`: etiquetas reales correspondientes
+
+    #### Return `CELoss`: devuelve la entropía cruzada por palabra
+    """
+
     # Outputs: probabilidades de las etiquetas (log-softmax)
 
     # Hace un flatten del ground truth
@@ -62,6 +91,16 @@ def loss_fn(outputs, labels):
 
 
 def accuracy(outputs, labels):
+    """
+    ### Función `accuracy`
+    Calcula la precisión del modelo
+
+    #### Parámetros:
+    * `outputs`: predicciones del modelo
+    * `labels`: etiquetas reales correspondientes
+
+    #### Return `accuracy`: devuelve la precisión media del modelo
+    """
 
     # Aplana el vector de labels
     labels = labels.ravel()
@@ -75,7 +114,7 @@ def accuracy(outputs, labels):
     # Devuelve el accuracy
     return np.sum(outputs == labels)/float(np.sum(mask))
 
-
+# Almacena la función que calcula la precisión en un diccionario
 metrics = {
     'accuracy': accuracy,
 }
