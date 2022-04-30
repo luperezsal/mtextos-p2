@@ -106,8 +106,7 @@ class DataLoader(object):
         * `types`: {array} array que contará con el nombre de los distintos conjuntos de datos que se quieran procesar.
         * `data_dir`: {Params} directorio desde el que se leerán los archivos de frases y etiquetas.
 
-        #### Return `data`: {dict} diccionario donde estarán almacenadas las frases y etiquetas
-        #                   de cada uno de los conjuntos de datos.
+        #### Return `data`: {dict} diccionario donde estarán almacenadas las frases y etiquetas de cada uno de los conjuntos de datos.
         """
         data = {}
         
