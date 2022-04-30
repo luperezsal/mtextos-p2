@@ -26,18 +26,18 @@ parser.add_argument('--restore_file', default=None,
 
 def train(model, optimizer, loss_fn, data_iterator, metrics, params, num_steps):
     """
-        ### Función `train`
-        Realiza el entrenamiento de un modelo dado durante una época, con un optimizador y una función de pérdida, iterando
-        por el conjunto de entrenamiento y almacenando las métricas correspondientes. 
+    ### Función `train`
+    Realiza el entrenamiento de un modelo dado durante una época, con un optimizador y una función de pérdida, iterando
+    por el conjunto de entrenamiento y almacenando las métricas correspondientes. 
 
-        #### Parámetros:
-        * `model`: instancia del modelo a entrenar.
-        * `optimizer`: {torch.optim} optimizador para el entrenamiento del modelo.
-        * `loss_fn`: función de pérdida a optimizar.
-        * `data_iterator`: iterador que provee los datos de entrenamiento en cada step
-        * `metrics`: {dict} dictionario que contiene las funciones con las métricas (accuracy, etc.)
-        * `params`: {utils.Params} clase contenedora dictionario con todos los hyperparámetros del modelo, entrenamiento, etc.
-        * `num_steps`: {int} número de steps para el entrenamiento en cada época 
+    #### Parámetros:
+    * `model`: instancia del modelo a entrenar.
+    * `optimizer`: {torch.optim} optimizador para el entrenamiento del modelo.
+    * `loss_fn`: función de pérdida a optimizar.
+    * `data_iterator`: iterador que provee los datos de entrenamiento en cada step
+    * `metrics`: {dict} dictionario que contiene las funciones con las métricas (accuracy, etc.)
+    * `params`: {utils.Params} clase contenedora dictionario con todos los hyperparámetros del modelo, entrenamiento, etc.
+    * `num_steps`: {int} número de steps para el entrenamiento en cada época 
 
     """
     
@@ -102,18 +102,18 @@ def train(model, optimizer, loss_fn, data_iterator, metrics, params, num_steps):
 def train_and_evaluate(model, train_data, val_data, optimizer, loss_fn, metrics, params, model_dir, restore_file=None):
     """
     ### Función `train_and_evaluate`
-        Realiza el entrenamiento completo de un modelo, almacenando el modelo con mejor accuracy en validación mediante ModelCheckpoint.
+    Realiza el entrenamiento completo de un modelo, almacenando el modelo con mejor accuracy en validación mediante ModelCheckpoint.
 
-        #### Parámetros:
-        * `model`: instancia del modelo a entrenar.
-        * `train_data`: conjunto de datos para entrenamiento 
-        * `val_data`: conjunto de datos para validación
-        * `optimizer`: {torch.optim} optimizador para el entrenamiento del modelo.
-        * `loss_fn`: función de pérdida a optimizar.
-        * `metrics`: {dict} dictionario que contiene las funciones con las métricas (accuracy, etc.)
-        * `params`: {Params} clase contenedora dictionario con todos los hyperparámetros del modelo, entrenamiento, etc.
-        * `model_dir`: {str} ruta donde se guardan los hyperparámetros del modelo
-        * `restore_file`: {int} nombre del modelo donde se almacenan los pesos del modelo, etc. 
+    #### Parámetros:
+    * `model`: instancia del modelo a entrenar.
+    * `train_data`: conjunto de datos para entrenamiento 
+    * `val_data`: conjunto de datos para validación
+    * `optimizer`: {torch.optim} optimizador para el entrenamiento del modelo.
+    * `loss_fn`: función de pérdida a optimizar.
+    * `metrics`: {dict} dictionario que contiene las funciones con las métricas (accuracy, etc.)
+    * `params`: {Params} clase contenedora dictionario con todos los hyperparámetros del modelo, entrenamiento, etc.
+    * `model_dir`: {str} ruta donde se guardan los hyperparámetros del modelo
+    * `restore_file`: {int} nombre del modelo donde se almacenan los pesos del modelo, etc. 
     """
 
     # Se carga un modelo previo en caso de que se indique la ruta
